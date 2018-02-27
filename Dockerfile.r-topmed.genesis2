@@ -7,19 +7,13 @@ RUN echo '#!/usr/local/bin/Rscript --vanilla --no-save --slave' > /tmp/installto
   echo 'source("https://bioconductor.org/biocLite.R")' >> /tmp/installtopmed.R && \
   echo 'biocLite( c("Matrix") )' >> /tmp/installtopmed.R && \
   echo 'devtools::install_git("git://github.com/zhengxwen/SNPRelate.git")' >> /tmp/installtopmed.R  && \
-  #echo 'devtools::install_git("git://github.com/zhengxwen/SeqArray.git")' >> /tmp/installtopmed.R  && \
-  echo 'devtools::install_git("git://github.com/smgogarten/SeqVarTools.git")' >> /tmp/installtopmed.R
-#  echo 'devtools::install_git("git://github.com/UW-GAC/genesis2_tests.git", branch="lmm_speedup")' >> /tmp/installtopmed.R  && \
-#  echo 'devtools::install_git("git://github.com/UW-GAC/genesis2.git")' >> /tmp/installtopmed.R
+  echo 'devtools::install_git("git://github.com/zhengxwen/SeqArray.git")' >> /tmp/installtopmed.R  && \
+  echo 'devtools::install_git("git://github.com/smgogarten/SeqVarTools.git")' >> /tmp/installtopmed.R && \
+  echo 'devtools::install_git("git://github.com/UW-GAC/genesis2_tests.git")' >> /tmp/installtopmed.R  && \
+  echo 'devtools::install_git("git://github.com/UW-GAC/genesis2.git")' >> /tmp/installtopmed.R
 
 # execute R script to install genesis2 topmed packages
 RUN Rscript /tmp/installtopmed.R
-
-RUN cd /tmp && \
-  git clone -b lmm_speedup https://github.com/UW-GAC/genesis2_tests.git && \
-  R CMD INSTALL genesis2_tests && \
-  git clone https://github.com/UW-GAC/genesis2.git && \
-  R CMD INSTALL genesis2
 
 # install genesis2 topmed pipeline
 ENV ANALYSIS_PIPELINE_BRANCH=feature/genesis2
